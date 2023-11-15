@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/profesores" method="post" th:object="${datosProfesor}">
+
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" th:field="*{nombre}" required>
+
+    <br>
+
+
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" name="apellido"  th:field="*{apellido}" required>
+
+    <br>
+
+
+    <label for="genero">Genero:</label>
+    <input type="text" id="genero" name="genero" th:field="*{genero}" required>
+
+    <br>
+
+    <button type="submit">Enviar</button>
+</form>
+
+
+
+<br>
+<H1>Profesores</H1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Genero</th>
+
+        <th>Eliminar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Itera sobre la lista de alumnos y muestra la información -->
+    <tr th:each="profe : ${profesor}">
+        <td th:text="${profe.id}"></td>
+        <td th:text="${profe.nombre}"></td>
+        <td th:text="${profe.apellido}"></td>
+        <td th:text="${profe.genero}"></td>
+        <td><a th:href="@{'/eliminar-profesor?id=' + ${profe.id}}">Eliminar</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
