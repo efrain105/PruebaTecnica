@@ -41,7 +41,7 @@
                 </div>
                 <div>
                     <label for="item-weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de nacimiento</label>
-                    <input type="date" name="item-weight" id="item-weight" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="12" required="">
+                    <input type="date" name="item-weight" id="item-weight" th:field="*{fechaDeNacimiento}"class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="12" required="">
                 </div>
             </div>
             <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
@@ -52,58 +52,61 @@
 </section>
 
 
-
-    <H1>Grados disponibles</H1>
-    <table class="table">
+<div class="overflow-x-auto">
+    <h1 class="text-2xl font-bold mb-4">Alumnos activos</h1>
+    <table class="table-auto w-full">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Profesor</th>
-            <th>Eliminar</th>
+            <th class="px-4 py-2">ID</th>
+            <th class="px-4 py-2">Nombre</th>
+            <th class="px-4 py-2">Apellidos</th>
+            <th class="px-4 py-2">Género</th>
+            <th class="px-4 py-2">Fecha de Nacimiento</th>
+            <th class="px-4 py-2">Grado</th>
+            <th class="px-4 py-2">Sección</th>
+            <th class="px-4 py-2">Eliminar</th>
         </tr>
         </thead>
         <tbody>
         <!-- Itera sobre la lista de alumnos y muestra la información -->
-        <tr th:each="grado : ${grados}">
-            <td th:text="${grado.id}"></td>
-            <td th:text="${grado.nombre}"></td>
-            <td th:text="${grado.profesor.nombre}"></td>
-            <td><a th:href="@{'/eliminar-alumno?id=' + ${grado.id}}">Eliminar</a></td>
+        <tr th:each="alumno : ${alumnos}" class="even:bg-gray-100">
+            <td class="border px-4 py-2" th:text="${alumno.alumno.id}"></td>
+            <td class="border px-4 py-2" th:text="${alumno.alumno.nombre}"></td>
+            <td class="border px-4 py-2" th:text="${alumno.alumno.apellido}"></td>
+            <td class="border px-4 py-2" th:text="${alumno.alumno.genero}"></td>
+            <td class="border px-4 py-2" th:text="${alumno.alumno.fechaDeNacimiento}"></td>
+            <td class="border px-4 py-2" th:text="${alumno.grado.nombre}"></td>
+            <td class="border px-4 py-2" th:text="${alumno.seccion}"></td>
+            <td class="border px-4 py-2"><a th:href="@{'/eliminar-alumno?id=' + ${alumno.alumno.id}}" class="text-red-500">Eliminar</a></td>
         </tr>
         </tbody>
     </table>
+</div>
 
+<div class="py-8">
+    <h1 class="text-2xl font-bold mb-4">Grados disponibles</h1>
+    <div class="overflow-x-auto">
+        <table class="table-auto w-full">
+            <thead>
+            <tr>
+                <th class="px-4 py-2">ID</th>
+                <th class="px-4 py-2">Nombre</th>
+                <th class="px-4 py-2">Profesor</th>
+                <th class="px-4 py-2">Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Itera sobre la lista de grados y muestra la información -->
+            <tr th:each="grado : ${grados}" class="even:bg-gray-100">
+                <td class="border px-4 py-2" th:text="${grado.id}"></td>
+                <td class="border px-4 py-2" th:text="${grado.nombre}"></td>
+                <td class="border px-4 py-2" th:text="${grado.profesor.nombre}"></td>
+                <td class="border px-4 py-2">
+                    <a href="#" class="text-red-500 hover:underline" th:href="@{'/eliminar-grado?id=' + ${grado.id}}">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
 
-    <br>
-    <H1>Alumnos</H1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Genero</th>
-            <th>Fecha de nacimiento</th>
-            <th>Grado</th>
-            <th>Seccion</th>
-            <th>Eliminar</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Itera sobre la lista de alumnos y muestra la información -->
-        <tr th:each="alumno : ${alumnos}">
-            <td th:text="${alumno.alumno.id}"></td>
-            <td th:text="${alumno.alumno.nombre}"></td>
-            <td th:text="${alumno.alumno.apellido}"></td>
-            <td th:text="${alumno.alumno.genero}"></td>
-            <td th:text="${alumno.alumno.fechaDeNacimiento}"></td>
-            <td th:text="${alumno.grado.nombre}"></td>
-            <td th:text="${alumno.seccion}"></td>
-            <td><a th:href="@{'/eliminar-alumno?id=' + ${alumno.alumno.id}}">Eliminar</a></td>
-        </tr>
-        </tbody>
-    </table>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.js"></script>
 
