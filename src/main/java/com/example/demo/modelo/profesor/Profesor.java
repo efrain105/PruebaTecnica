@@ -18,7 +18,6 @@ public class Profesor {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-
     private String nombre;
     private String apellido;
     private String genero;
@@ -29,6 +28,22 @@ public class Profesor {
         this.nombre = datosProfesor.nombre();
         this.apellido = datosProfesor.apellido();
         this.genero = datosProfesor.genero();
+    }
+
+
+    @Override
+    public String toString() {
+        return nombre + " " + apellido;
+    }
+
+
+    public void actualizarDatos(DatosActualizarProfesor datosActualizarProfesor) {
+        if (datosActualizarProfesor.nombre() != null){
+            this.nombre = datosActualizarProfesor.nombre();
+        }
+        if (datosActualizarProfesor.apellido() != null){
+            this.apellido = datosActualizarProfesor.apellido();
+        }
     }
 
 }

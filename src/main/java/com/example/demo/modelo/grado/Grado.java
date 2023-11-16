@@ -22,7 +22,7 @@ public class Grado {
 
     private String nombre;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profesor_id")
     private Profesor profesor;
 

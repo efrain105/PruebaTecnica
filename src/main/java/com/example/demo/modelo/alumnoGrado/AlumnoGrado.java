@@ -1,6 +1,7 @@
 package com.example.demo.modelo.alumnoGrado;
 
 
+import com.example.demo.controllers.DatosActualizarAlumno;
 import com.example.demo.modelo.alumno.Alumno;
 import com.example.demo.modelo.grado.Grado;
 import jakarta.persistence.*;
@@ -47,4 +48,12 @@ public class AlumnoGrado {
     }
 
 
+    /*public void actualizarDatos(DatosActualizarAlumno datosActualizarAlumno) {
+        if (datosActualizarAlumno.alumno() != null) {
+            this.alumno = datosActualizarAlumno.alumno();
+        }
+        if (datosActualizarAlumno.grado() != null) {
+            this.grado = datosActualizarAlumno.grado();
+        }
+    }*/
 }

@@ -23,7 +23,6 @@ module.exports = {
 
 }
 
-
 tailwind.config = {
   darkMode: 'class',
   theme: {

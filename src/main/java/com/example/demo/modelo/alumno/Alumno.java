@@ -1,7 +1,9 @@
 package com.example.demo.modelo.alumno;
 
 
+import com.example.demo.controllers.DatosActualizarAlumno;
 import com.example.demo.modelo.alumnoGrado.AlumnoGrado;
+import com.example.demo.modelo.profesor.DatosActualizarProfesor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -36,5 +38,23 @@ public class Alumno {
         this.apellido = datosAlumno.apellido();
         this.genero = datosAlumno.genero();
         this.fechaDeNacimiento = datosAlumno.fechaDeNacimiento();
+    }
+
+
+    public void actualizarDatos(DatosActualizarAlumno datosActualizarAlumno) {
+        if (datosActualizarAlumno.nombre() != null){
+            this.nombre = datosActualizarAlumno.nombre();
+        }
+        if (datosActualizarAlumno.apellido() != null){
+            this.apellido = datosActualizarAlumno.apellido();
+        }
+        if (datosActualizarAlumno.genero() != null){
+            this.genero = datosActualizarAlumno.genero();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return nombre + " " + apellido ;
     }
 }

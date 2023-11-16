@@ -9,7 +9,10 @@ import com.example.demo.modelo.alumnoGrado.RepositorioAlumnoGrado;
 import com.example.demo.modelo.grado.DatosGrado;
 import com.example.demo.modelo.grado.Grado;
 import com.example.demo.modelo.grado.RepositorioGrado;
+import com.example.demo.modelo.profesor.DatosActualizarProfesor;
+import com.example.demo.modelo.profesor.Profesor;
 import com.example.demo.modelo.profesor.RepositorioProfesor;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +36,8 @@ public class AlumnoController {
     RepositorioProfesor repositorioProfesor;
 
     @GetMapping("/alumnos")
-    public String alumnos(@ModelAttribute DatosAlumno datosAlumno, @ModelAttribute DatosGrado datosGrado, Model model){
+    public String alumnos(@ModelAttribute DatosAlumno datosAlumno, @ModelAttribute DatosGrado datosGrado, Model model, @ModelAttribute DatosActualizarAlumno datosActualizarAlumno){
+        model.addAttribute("datosAlumnoac",datosActualizarAlumno);
         model.addAttribute("datosAlumno", datosAlumno);
         model.addAttribute("datosGrado", datosGrado);
         List<AlumnoGrado> alumnos = repositorioAlumnoGrado.findAll();
@@ -62,6 +66,16 @@ public class AlumnoController {
         repositorioAlumnoGrado.delete(byAlumnoId);
         Optional<Alumno> alumno = repositorioAlumno.findById(id);
         alumno.ifPresent(repositorioAlumno::delete);
+        return "redirect:alumnos";
+    }
+
+
+
+    @PostMapping("/alumnosac")
+    @Transactional
+    public String actualizarMedico(@ModelAttribute DatosActualizarAlumno datosActualizarAlumno, Model model) {
+        Alumno alumno = repositorioAlumno.getReferenceById(datosActualizarAlumno.id());
+        alumno.actualizarDatos(datosActualizarAlumno);
         return "redirect:alumnos";
     }
 
