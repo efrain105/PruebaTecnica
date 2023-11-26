@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.modelo.alumno;
 
 import com.example.demo.modelo.alumno.Alumno;
 import com.example.demo.modelo.grado.Grado;

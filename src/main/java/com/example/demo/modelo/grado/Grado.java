@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
+
 
 @Table(name = "grado")
 @Entity(name = "Grado")
@@ -29,6 +29,13 @@ public class Grado {
     public Grado(DatosGrado datosGrado) {
         this.nombre = datosGrado.nombre();
         this.profesor = datosGrado.profesor();
+    }
+
+
+    public void actualizarDatos(DatosGrado datosGrado) {
+        if (datosGrado.profesor() != null){
+            this.profesor = datosGrado.profesor();
+        }
     }
 
     public Profesor getProfesor() {

@@ -24,11 +24,13 @@ public class Profesor {
 
 
 
+
     public Profesor(DatosProfesor datosProfesor) {
         this.nombre = datosProfesor.nombre();
         this.apellido = datosProfesor.apellido();
         this.genero = datosProfesor.genero();
     }
+
 
 
     @Override
@@ -38,12 +40,17 @@ public class Profesor {
 
 
     public void actualizarDatos(DatosActualizarProfesor datosActualizarProfesor) {
-        if (datosActualizarProfesor.nombre() != null){
+        if (!datosActualizarProfesor.nombre().isEmpty()){
             this.nombre = datosActualizarProfesor.nombre();
         }
-        if (datosActualizarProfesor.apellido() != null){
+        if (!datosActualizarProfesor.apellido().isEmpty()){
             this.apellido = datosActualizarProfesor.apellido();
         }
     }
+
+
+
+
+
 
 }

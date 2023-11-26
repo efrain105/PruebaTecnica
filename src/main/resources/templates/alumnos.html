@@ -4,33 +4,33 @@
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-    <title>Title</title>
+    <title>CRUD Alumnos</title>
 </head>
 <body class="bg-white dark:bg-gray-900">
 <div th:include="~{index.html :: header}"></div>
 
 
-<section>
-    <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+<section class="flex justify-center items-center">
+    <div class="flex-1 py-8 px-4 mx-auto max-w-2xl lg:py-16">
         <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Agregar nuevo Alumno</h2>
         <form action="/alumnos" method="post" th:object="${datosAlumno}">
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                <div class="sm:col-span-2">
+                <div class="w-full">
                     <label for="name"
                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
                     <input type="text" name="name" id="name" th:field="*{nombre}"
                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                           placeholder="Nombres" required="">
+                           placeholder="Nombres" required="" pattern="^[A-Za-z ]+$">
                 </div>
                 <div class="w-full">
                     <label for="brand"
                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellidos</label>
                     <input type="text" name="brand" id="brand" th:field="*{apellido}"
                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                           placeholder="Apellidos" required="">
+                           placeholder="Apellidos" required="" pattern="^[A-Za-z ]+$">
                 </div>
                 <div class="w-full">
-                    <label for="genero" th:field="*{genero}"
+                    <label for="genero" id="genero" th:field="*{genero}"
                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Género</label>
                     <div class="flex items-center mb-4">
                         <input id="masculino-radio" type="radio" value="masculino" name="genero"
@@ -43,6 +43,15 @@
                         <label for="femenino-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Femenino</label>
                     </div>
                 </div>
+
+                <div>
+                    <label for="item-weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha
+                        de nacimiento</label>
+                    <input type="date" name="item-weight" id="item-weight" th:field="*{fechaDeNacimiento}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                           placeholder="12" required="">
+                </div>
+
                 <div>
                     <label for="idGrado"
                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grado</label>
@@ -51,86 +60,41 @@
                         <option th:each="grado : ${grados}" th:value="${grado.id}" th:text="${grado.nombre}"></option>
                     </select>
                 </div>
+
                 <div>
-                    <label for="item-weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha
-                        de nacimiento</label>
-                    <input type="date" name="item-weight" id="item-weight" th:field="*{fechaDeNacimiento}"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                           placeholder="12" required="">
+                    <label for="seccion" id="seccion"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seccion</label>
+                    <select name="nombreSeccion" aria-label="Default select example" id="nombreSeccion"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option th:value="A" th:text="A"></option>
+                        <option th:value="B" th:text="B"></option>
+                        <option th:value="C" th:text="C"></option>
+                    </select>
                 </div>
-            </div>
-            <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-blue-500 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                Guardar Alumno
-            </button>
 
-        </form>
-    </div>
-</section>
-
-
-<section>
-    <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Actualizar Alumno</h2>
-        <form action="/alumnosac" method="post" th:object="${datosAlumnoac}">
-
-            <label for="profeac" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alumnos a
-                Actualizar</label>
-            <select name="profeac" aria-label="Default select example" id="profeac" th:field="*{id}"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option th:each="alumno : ${alumnos}" th:value="${alumno.alumno.id}"
-                        th:text="${alumno.alumno.toString()}"></option>
-            </select>
-            <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                <div class="sm:col-span-2">
-                    <label for="name"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
-                    <input type="text" name="name" id="name" th:field="*{nombre}"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                           placeholder="Nombres" required="">
-                </div>
-                <div class="w-full">
-                    <label for="brand"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellidos</label>
-                    <input type="text" name="brand" id="brand" th:field="*{apellido}"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                           placeholder="Apellidos" required="">
-                </div>
-                <div class="w-full">
-                    <label for="genero" th:field="*{genero}"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Género</label>
-                    <div class="flex items-center mb-4">
-                        <input id="masculinoac" type="radio" value="masculino" name="genero"
-                               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="masculinoac" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Masculino</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input id="femeninoac" type="radio" value="femenino" name="genero"
-                               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="femeninoac-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Femenino</label>
-                    </div>
-                </div>
             </div>
             <button type="submit"
                     class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-blue-500 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                Actualizar Alumno
+                Guardar Alumno
             </button>
         </form>
     </div>
 </section>
 
+
 <!--  -->
-<div class="overflow-x-auto">
+<div class="overflow-x-auto py-8 px-4 mx-auto max-w-3xl lg:py-16">
     <h1 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Alumnos activos</h1>
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr class="border-b dark:border-gray-700">
             <th scope="col" class="px-4 py-3">ID</th>
-            <th scope="col" class="px-4 py-3">Nombre</th>
-            <th scope="col" class="px-4 py-3">Apellidos</th>
+            <th scope="col" class="px-4 py-3">Nombre Completo</th>
             <th scope="col" class="px-4 py-3">Género</th>
             <th scope="col" class="px-4 py-3">Fecha de Nacimiento</th>
             <th scope="col" class="px-4 py-3">Grado</th>
             <th scope="col" class="px-4 py-3">Sección</th>
+            <th scope="col" class="px-4 py-3">Editar</th>
             <th scope="col" class="px-4 py-3">Eliminar</th>
         </tr>
         </thead>
@@ -138,21 +102,116 @@
         <!-- Itera sobre la lista de alumnos y muestra la información -->
         <tr th:each="alumno : ${alumnos}" class="border-b dark:border-gray-700">
             <td class="px-4 py-3" th:text="${alumno.alumno.id}"></td>
-            <td class="px-4 py-3" th:text="${alumno.alumno.nombre}"></td>
-            <td class="px-4 py-3" th:text="${alumno.alumno.apellido}"></td>
+            <td class="px-4 py-3" th:text="${alumno.alumno.toString()}"></td>
             <td class="px-4 py-3" th:text="${alumno.alumno.genero}"></td>
             <td class="px-4 py-3" th:text="${alumno.alumno.fechaDeNacimiento}"></td>
             <td class="px-4 py-3" th:text="${alumno.grado.nombre}"></td>
             <td class="px-4 py-3" th:text="${alumno.seccion}"></td>
             <td class="px-4 py-3">
-                <a th:href="@{'/eliminar-alumno?id=' + ${alumno.alumno.id}}" class="text-red-500">Eliminar</a>
+                <button id="updateProductButton" data-modal-target="updateProductModal"
+                        data-modal-toggle="updateProductModal" th:data-id-alumno="${alumno.alumno.id}"
+                        th:data-nombrecompleto-alumno="${alumno.alumno.toString()}"
+                        th:data-nombre-alumno="${alumno.alumno.nombre}"
+                        th:data-apellido-alumno="${alumno.alumno.apellido}"
+                        th:data-genero-alumno="${alumno.alumno.genero}"
+                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+Editar
+</span>
+
+
+            </td>
+            <td class="px-4 py-3">
+                <a th:href="@{'/eliminar-alumno?id=' + ${alumno.alumno.id}}"
+                   class="block text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                   style="cursor: pointer;">
+                    <svg class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </a>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<div class="py-8">
+
+<div id="updateProductModal" tabindex="-1" aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+            <!-- Modal header -->
+            <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                <h3 id="alumnoIdText" class="text-lg font-semibold text-gray-900 dark:text-white">
+                    Editar Alumno
+                </h3>
+                <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-toggle="updateProductModal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <form action="/alumnosac" method="post" th:object="${datosAlumnoac}">
+                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+
+                    <div class="w-full">
+                        <label for="name"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nuevo Nombre</label>
+                        <input type="text" name="nombre" id="nombre" th:field="*{nombre}"
+                               class="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                               placeholder="Nombres">
+                    </div>
+                    <div class="w-full">
+                        <label for="brand"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nuevo
+                            Apellido</label>
+                        <input type="text" name="apellido" id="apellido" th:field="*{apellido}"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                               placeholder="Apellidos">
+                    </div>
+                    <div class="w-full">
+                        <label th:field="*{genero}"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Género</label>
+                        <div class="flex items-center mb-4">
+                            <input id="masculinoac" type="radio" value="masculino" name="generoac"
+                                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="masculinoac" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Masculino</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="femeninoac" type="radio" value="femenino" name="genero"
+                                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="femeninoac"
+                                   class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Femenino</label>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="alumnoIdInput" name="alumnoId"/>
+                <button type="submit"
+                        class="inline-flex mr-8 items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-blue-500 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 bg-blue-500 hover:bg-blue-600 focus:bg-blue-600 focus:outline-none  rounded-lg shadow-md transition duration-300">
+                    Actualizar Alumno
+                </button>
+                <button type="button" data-modal-toggle="updateProductModal"
+                        class="inline-flex ml-8 items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-red-500 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                    Cancelar
+                </button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="overflow-x-auto py-8 px-4 mx-auto max-w-3xl lg:py-16">
     <h1 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Grados disponibles</h1>
     <div class="overflow-x-auto">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -174,9 +233,34 @@
         </table>
     </div>
 </div>
+<script>
+    var buttons = document.querySelectorAll('[data-id-alumno]');
+    buttons.forEach(function (button) {
 
+        button.addEventListener('click', function () {
+            var alumnoId = this.getAttribute('data-id-alumno');
+            var alumnoNombreCompleto = this.getAttribute('data-nombrecompleto-alumno');
+            var nombre = this.getAttribute('data-nombre-alumno');
+            var apellido = this.getAttribute('data-apellido-alumno');
+            var genero = this.getAttribute('data-genero-alumno');
+
+            document.getElementById('alumnoIdInput').value = alumnoId;
+            document.getElementById('alumnoIdText').innerText = 'Editar a ' + alumnoNombreCompleto;
+            document.getElementById('nombre').value = nombre;
+            document.getElementById('apellido').value = apellido;
+
+            var masculinoRadio = document.getElementById('masculinoac');
+            var femeninoRadio = document.getElementById('femeninoac');
+            masculinoRadio.checked = genero === "masculino";
+            femeninoRadio.checked = genero === "femenino";
+
+
+            console.log("El id es" + genero);
+        });
+    });
+
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.js"></script>
-
 </body>
 </html>

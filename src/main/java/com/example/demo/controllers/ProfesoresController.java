@@ -58,7 +58,6 @@ public class ProfesoresController {
         if (profesor.isPresent()) {
             Profesor profesor1 = profesor.get();
             List<Grado> grados = repositorioGrado.findByProfesor_Id(profesor1.getId());
-
             // Establecer profesor a null en cada grado
             for (Grado grado : grados) {
                 grado.setProfesor(null);

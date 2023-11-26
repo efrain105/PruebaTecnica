@@ -1,15 +1,11 @@
 package com.example.demo.modelo.alumno;
 
 
-import com.example.demo.controllers.DatosActualizarAlumno;
-import com.example.demo.modelo.alumnoGrado.AlumnoGrado;
-import com.example.demo.modelo.profesor.DatosActualizarProfesor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDate;
 
@@ -42,10 +38,10 @@ public class Alumno {
 
 
     public void actualizarDatos(DatosActualizarAlumno datosActualizarAlumno) {
-        if (datosActualizarAlumno.nombre() != null){
+        if (!datosActualizarAlumno.nombre().isEmpty()){
             this.nombre = datosActualizarAlumno.nombre();
         }
-        if (datosActualizarAlumno.apellido() != null){
+        if (!datosActualizarAlumno.apellido().isEmpty()){
             this.apellido = datosActualizarAlumno.apellido();
         }
         if (datosActualizarAlumno.genero() != null){
@@ -55,6 +51,6 @@ public class Alumno {
 
     @Override
     public String toString() {
-        return nombre + " " + apellido ;
+        return  nombre + " " + apellido ;
     }
 }

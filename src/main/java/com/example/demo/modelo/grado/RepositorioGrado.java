@@ -13,10 +13,6 @@ public interface RepositorioGrado extends JpaRepository<Grado,Long> {
 
     List<Grado> findByProfesor_Id(Long id);
 
-    @Transactional
-    @Modifying
-    @Query("update Grado g set g.profesor = ?1 where g.profesor = ?2")
-    int updateProfesorByProfesor(Profesor profesor, Profesor profesor1);
 
 
 }

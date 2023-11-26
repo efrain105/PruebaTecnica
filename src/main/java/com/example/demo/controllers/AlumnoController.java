@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
-
 import com.example.demo.modelo.alumno.Alumno;
+import com.example.demo.modelo.alumno.DatosActualizarAlumno;
 import com.example.demo.modelo.alumno.DatosAlumno;
 import com.example.demo.modelo.alumno.RepositorioAlumno;
 import com.example.demo.modelo.alumnoGrado.AlumnoGrado;
@@ -9,8 +9,6 @@ import com.example.demo.modelo.alumnoGrado.RepositorioAlumnoGrado;
 import com.example.demo.modelo.grado.DatosGrado;
 import com.example.demo.modelo.grado.Grado;
 import com.example.demo.modelo.grado.RepositorioGrado;
-import com.example.demo.modelo.profesor.DatosActualizarProfesor;
-import com.example.demo.modelo.profesor.Profesor;
 import com.example.demo.modelo.profesor.RepositorioProfesor;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +34,8 @@ public class AlumnoController {
     RepositorioProfesor repositorioProfesor;
 
     @GetMapping("/alumnos")
-    public String alumnos(@ModelAttribute DatosAlumno datosAlumno, @ModelAttribute DatosGrado datosGrado, Model model, @ModelAttribute DatosActualizarAlumno datosActualizarAlumno){
+    public String alumnos(@ModelAttribute DatosAlumno datosAlumno, @ModelAttribute DatosGrado datosGrado, Model model,
+                          @ModelAttribute DatosActualizarAlumno datosActualizarAlumno){
         model.addAttribute("datosAlumnoac",datosActualizarAlumno);
         model.addAttribute("datosAlumno", datosAlumno);
         model.addAttribute("datosGrado", datosGrado);
@@ -48,13 +47,13 @@ public class AlumnoController {
     }
 
     @PostMapping("/alumnos")
-    public String crearAlumno(@ModelAttribute DatosAlumno datosAlumno, Model model,
-    @RequestParam Long idGrado
+    public String crearAlumno(@ModelAttribute DatosAlumno datosAlumno,
+    @RequestParam Long idGrado, @RequestParam String nombreSeccion
     ){
         Alumno alumno = new Alumno(datosAlumno);
         Optional<Grado> grado = repositorioGrado.findById(idGrado);
         Grado grado1 = grado.get();
-        AlumnoGrado alumnoGrado = new AlumnoGrado(new DatosAlumnoGrado(alumno, grado1, "A"));
+        AlumnoGrado alumnoGrado = new AlumnoGrado(new DatosAlumnoGrado(alumno, grado1, nombreSeccion));
         repositorioAlumno.save(alumno);
         repositorioAlumnoGrado.save(alumnoGrado);
         return "redirect:alumnos";
@@ -73,10 +72,25 @@ public class AlumnoController {
 
     @PostMapping("/alumnosac")
     @Transactional
-    public String actualizarMedico(@ModelAttribute DatosActualizarAlumno datosActualizarAlumno, Model model) {
-        Alumno alumno = repositorioAlumno.getReferenceById(datosActualizarAlumno.id());
+    public String actualizarMedico(@ModelAttribute DatosActualizarAlumno datosActualizarAlumno, Model model, @RequestParam Long alumnoId) {
+        Alumno alumno = repositorioAlumno.getReferenceById(alumnoId);
         alumno.actualizarDatos(datosActualizarAlumno);
         return "redirect:alumnos";
     }
+
+
+    @GetMapping("/editar")
+    public String editaralumno(@ModelAttribute DatosAlumno datosAlumno, @ModelAttribute DatosGrado datosGrado, Model model,
+                               @ModelAttribute DatosActualizarAlumno datosActualizarAlumno, @RequestParam Long id){
+        model.addAttribute("datosAlumnoac",datosActualizarAlumno);
+        model.addAttribute("datosAlumno", datosAlumno);
+        model.addAttribute("datosGrado", datosGrado);
+        AlumnoGrado alumnos = repositorioAlumnoGrado.findByAlumno_Id(id);
+        model.addAttribute("alumnos", alumnos);
+        List<Grado> grados = repositorioGrado.findAll();
+        model.addAttribute("grados", grados);
+        return "editar";
+    }
+
 
 }

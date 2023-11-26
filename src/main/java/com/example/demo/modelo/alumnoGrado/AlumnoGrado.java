@@ -1,7 +1,6 @@
 package com.example.demo.modelo.alumnoGrado;
 
 
-import com.example.demo.controllers.DatosActualizarAlumno;
 import com.example.demo.modelo.alumno.Alumno;
 import com.example.demo.modelo.grado.Grado;
 import jakarta.persistence.*;
@@ -9,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 
 @Table(name = "alumnogrado")
 @Entity(name = "AlumnoGrado")
